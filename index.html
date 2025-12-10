@@ -45,6 +45,46 @@
       line-height: 1.2;
       padding: 0 8px;
       width: 100%;
+      position: relative;
+    }
+
+    .info-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: white;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+      transition: all 0.2s;
+    }
+
+    .info-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    }
+
+    .info-btn:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    @media (max-width: 480px) {
+      .info-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        right: 4px;
+      }
     }
 
     p.instructions {
@@ -56,6 +96,208 @@
       padding: 0 8px;
       max-width: 600px;
       width: 100%;
+    }
+
+    /* ===== Modal Styles ===== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 20px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 24px 24px 16px;
+      border-bottom: 2px solid #eef2ff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #4f46e5;
+      font-weight: 800;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #666;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .close-btn:hover {
+      background: #f3f4f6;
+      color: #dc2626;
+    }
+
+    .modal-content {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-section {
+      margin-bottom: 28px;
+    }
+
+    .modal-section h3 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      color: #333;
+      font-weight: 700;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #eef2ff;
+    }
+
+    .modal-section p {
+      margin: 0 0 16px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .modal-section ul, .modal-section ol {
+      margin: 0 0 16px;
+      padding-left: 24px;
+    }
+
+    .modal-section li {
+      margin-bottom: 10px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .role-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .role-card {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid #4f46e5;
+    }
+
+    .role-card.civilian {
+      border-left-color: #3b82f6;
+    }
+
+    .role-card.imposter {
+      border-left-color: #dc2626;
+    }
+
+    .role-card.detective {
+      border-left-color: #10b981;
+    }
+
+    .role-card.jester {
+      border-left-color: #f59e0b;
+    }
+
+    .role-card h4 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .role-card .role-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .civilian .role-icon {
+      background: #3b82f6;
+    }
+
+    .imposter .role-icon {
+      background: #dc2626;
+    }
+
+    .detective .role-icon {
+      background: #10b981;
+    }
+
+    .jester .role-icon {
+      background: #f59e0b;
+    }
+
+    .role-card p {
+      margin: 0 0 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .role-card .goal {
+      font-weight: 600;
+      color: #111;
+      background: #eef2ff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 8px;
     }
 
     /* ===== Subject Selection ===== */
@@ -286,8 +528,8 @@
       border-color: #4f46e5;
     }
 
-    /* Detective toggle styling */
-    .detective-toggle {
+    /* Role toggle styling */
+    .role-toggle {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -299,7 +541,7 @@
       padding: 12px 0;
     }
 
-    .detective-toggle label {
+    .role-toggle label {
       margin-bottom: 0;
       cursor: pointer;
       display: flex;
@@ -310,16 +552,23 @@
       font-weight: 600;
     }
 
-    .detective-toggle input[type="checkbox"] {
+    .role-toggle input[type="checkbox"] {
       width: 20px;
       height: 20px;
       margin: 0;
       cursor: pointer;
+    }
+
+    .detective-toggle input[type="checkbox"] {
       accent-color: #10b981;
     }
 
+    .jester-toggle input[type="checkbox"] {
+      accent-color: #f59e0b;
+    }
+
     @media (max-width: 480px) {
-      .detective-toggle {
+      .role-toggle {
         max-width: 100%;
       }
     }
@@ -502,9 +751,18 @@
       font-size: 18px;
     }
 
-    /* ===== Detective styling ===== */
+    /* ===== Role styling ===== */
     .detective-role {
       color: #10b981;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 4px;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .jester-role {
+      color: #f59e0b;
       font-size: 14px;
       font-weight: 700;
       margin-top: 4px;
@@ -672,6 +930,22 @@
       .subject-options {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
       }
+      
+      .modal {
+        max-height: 90vh;
+      }
+      
+      .modal-header {
+        padding: 20px 20px 16px;
+      }
+      
+      .modal-content {
+        padding: 20px;
+      }
+      
+      .modal-header h2 {
+        font-size: 20px;
+      }
     }
 
     /* Very small screen adjustments */
@@ -749,11 +1023,108 @@
 <body>
 <div class="container">
 
-  <h1>Imposter Game</h1>
+  <h1>
+    Imposter Game
+    <button class="info-btn" id="infoBtn">i</button>
+  </h1>
   <p class="instructions">
     You get a word + category. Imposters see the category, too.<br>
     Cards can only be opened once.
   </p>
+
+  <!-- Info Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>How to Play Imposter Game</h2>
+        <button class="close-btn" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="modal-content">
+        
+        <div class="modal-section">
+          <h3>Rules</h3>
+          <ol>
+            <li><strong>Setup:</strong> Choose a subject, number of players, and imposters</li>
+            <li><strong>Secret Word:</strong> All players get a secret word from the chosen subject</li>
+            <li><strong>Category:</strong> Everyone also sees the category of the secret word</li>
+            <li><strong>Imposters:</strong> Some players are imposters - they DON'T know the secret word!</li>
+            <li><strong>Discussion:</strong> Players discuss to figure out who the imposters are by saying a word related to the secret word they got</li>
+            <li><strong>Voting:</strong> Vote to eliminate suspected imposters</li>
+            <li><strong>Winning:</strong> Civilians win if all imposters are eliminated. Imposters win if they survive. Jester wins if he/she gets voted out.</li>
+          </ol>
+        </div>
+		
+        <div class="modal-section">
+          <h3>Cards</h3>
+          <div class="role-grid">
+            
+            <div class="role-card civilian">
+              <h4>
+                <span class="role-icon">C</span>
+                Civilian
+              </h4>
+              <p>You know the secret word and its category. Your goal is to identify and vote out the imposters.</p>
+              <div class="goal">Goal: Eliminate all imposters</div>
+            </div>
+
+            <div class="role-card imposter">
+              <h4>
+                <span class="role-icon">I</span>
+                Imposter
+              </h4>
+              <p>You DON'T know the secret word! You only see the category. Pretend you know the word to blend in.</p>
+              <div class="goal">Goal: Outnumber the civilians</div>
+            </div>
+
+            <div class="role-card detective">
+              <h4>
+                <span class="role-icon">D</span>
+                Detective
+              </h4>
+              <p>You know the secret word. When you reveal your card, you get to peek at one random player's role.</p>
+              <div class="goal">Goal: Help civilians find imposters</div>
+            </div>
+
+            <div class="role-card jester">
+              <h4>
+                <span class="role-icon">J</span>
+                Jester
+              </h4>
+              <p>You know the secret word. Your goal is to get voted out by acting suspiciously without being obvious.</p>
+              <div class="goal">Goal: Get voted out during discussion</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>Gameplay</h3>
+          <ol>
+            <li><strong>Preparation:</strong> Host sets up the game with desired options</li>
+            <li><strong>Card Distribution:</strong> Each player views their card ONCE on the device</li>
+            <li><strong>Discussion:</strong> Players discuss - imposters must bluff convincingly</li>
+            <li><strong>Questioning:</strong> Ask about the secret word to find inconsistencies</li>
+            <li><strong>Voting:</strong> Vote for who you think is an imposter</li>
+            <li><strong>Reveal:</strong> Eliminated player reveals their role</li>
+            <li><strong>Repeat:</strong> Continue until either side wins</li>
+          </ol>
+        </div>
+
+        <div class="modal-section">
+          <h3>Tips</h3>
+          <ul>
+            <li><strong>Civilians:</strong> Give specific yet unrevealing words. Imposters often give vague answers.</li>
+            <li><strong>Imposters:</strong> Listen carefully to what others say and build on their descriptions.</li>
+            <li><strong>Detective:</strong> Use your peek information wisely - don't reveal it too early.</li>
+            <li><strong>Jester:</strong> Act suspicious but not obviously fake. You want to be voted out, not ignored.</li>
+          </ul>
+        </div>
+
+		leoniscool.com
+
+      </div>
+    </div>
+  </div>
 
   <div class="subject-section" id="subjectSection">
     <h2>Choose a Subject</h2>
@@ -789,10 +1160,17 @@
       <input id="imposterCount" type="number" min="1" max="10" value="1">
     </div>
 
-    <div class="detective-toggle">
+    <div class="role-toggle detective-toggle">
       <label>
         <input id="detectiveToggle" type="checkbox">
         Detective
+      </label>
+    </div>
+
+    <div class="role-toggle jester-toggle">
+      <label>
+        <input id="jesterToggle" type="checkbox">
+        Jester
       </label>
     </div>
 
@@ -837,6 +1215,7 @@ const generateBtn = document.getElementById("generateBtn");
 const playerCountInput = document.getElementById("playerCount");
 const imposterCountInput = document.getElementById("imposterCount");
 const detectiveToggle = document.getElementById("detectiveToggle");
+const jesterToggle = document.getElementById("jesterToggle");
 const errorBox = document.getElementById("error");
 const revealTracker = document.getElementById("revealTracker");
 const firstPlayerBox = document.getElementById("firstPlayer");
@@ -848,6 +1227,11 @@ const selectedSubjectName = document.getElementById("selectedSubjectName");
 const changeSubjectBtn = document.getElementById("changeSubjectBtn");
 const customSubjectInput = document.getElementById("customSubjectInput");
 const customSubjectBtn = document.getElementById("customSubjectBtn");
+
+// Modal elements
+const infoBtn = document.getElementById("infoBtn");
+const modalOverlay = document.getElementById("modalOverlay");
+const closeModalBtn = document.getElementById("closeModalBtn");
 
 /* ===== DEFAULT SUBJECTS ===== */
 const defaultSubjects = {
@@ -1331,6 +1715,36 @@ currentSubject = localStorage.getItem("currentSubject") || "";
 actualCustomSubject = localStorage.getItem("actualCustomSubject") || "";
 customItems = JSON.parse(localStorage.getItem("customItems")) || [];
 detectiveToggle.checked = JSON.parse(localStorage.getItem("detectiveEnabled")) || false;
+jesterToggle.checked = JSON.parse(localStorage.getItem("jesterEnabled")) || false;
+
+/* ===== MODAL FUNCTIONS ===== */
+function openModal() {
+  modalOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+// Modal event listeners
+infoBtn.addEventListener('click', openModal);
+closeModalBtn.addEventListener('click', closeModal);
+
+// Close modal when clicking outside
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) {
+    closeModal();
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+    closeModal();
+  }
+});
 
 /* ===== INITIALIZE SUBJECT OPTIONS ===== */
 function initializeSubjectOptions() {
@@ -1465,9 +1879,17 @@ function selectFirstPlayer() {
   setTimeout(() => {
     let firstPlayerText = `Player ${randomPlayer} goes first!`;
     
-    // Optional: Add detective status
+    // Add role status
+    const roleNotes = [];
     if (detectiveToggle.checked) {
-      firstPlayerText += "\n(Detective is in play)";
+      roleNotes.push("Detective");
+    }
+    if (jesterToggle.checked) {
+      roleNotes.push("Jester");
+    }
+    
+    if (roleNotes.length > 0) {
+      firstPlayerText += `\n(${roleNotes.join(" & ")} in play)`;
     }
     
     firstPlayerBox.textContent = firstPlayerText;
@@ -1511,6 +1933,17 @@ function generateCards() {
 
   if (imposterCount >= playerCount) {
     errorBox.textContent = "Imposters must be less than total players.";
+    return;
+  }
+
+  // Check if we have enough non-imposter slots for special roles
+  const civilianSlots = playerCount - imposterCount;
+  let specialRolesCount = 0;
+  if (detectiveToggle.checked) specialRolesCount++;
+  if (jesterToggle.checked) specialRolesCount++;
+  
+  if (civilianSlots < specialRolesCount + 1) { // +1 for at least one regular civilian
+    errorBox.textContent = `Need at least ${specialRolesCount + 1} non-imposters for special roles. Reduce imposters or players.`;
     return;
   }
 
@@ -1563,7 +1996,21 @@ function generateCards() {
     }
   }
 
-  // Replace all non-imposter, non-detective with the secret item
+  // Assign jester (optional) - replaces a civilian
+  let jesterIndex = null;
+  if (jesterToggle.checked) {
+    let assigned = false;
+    while (!assigned) {
+      const idx = Math.floor(Math.random() * playerCount);
+      if (words[idx] === "Civilian") {
+        words[idx] = "Jester";
+        jesterIndex = idx;
+        assigned = true;
+      }
+    }
+  }
+
+  // Replace all non-imposter, non-detective, non-jester with the secret item
   for (let i = 0; i < words.length; i++) {
     if (words[i] === "Civilian") {
       words[i] = secretItem;
@@ -1626,6 +2073,15 @@ function generateCards() {
           detectiveText.className = "detective-role";
           detectiveText.textContent = "Detective";
           wordBox.appendChild(detectiveText);
+        } else if (word === "Jester") {
+          // For jester, show the subject word in black
+          wordBox.textContent = secretItem;
+          
+          // Add "Jester" text underneath in orange
+          const jesterText = document.createElement("div");
+          jesterText.className = "jester-role";
+          jesterText.textContent = "Jester";
+          wordBox.appendChild(jesterText);
         } else {
           wordBox.textContent = word; // This is the secret item
         }
@@ -1646,6 +2102,7 @@ function generateCards() {
           const otherWord = words[otherPlayer];
           const otherRole = otherWord === "Imposter" ? "Imposter" : 
                            otherWord === "Detective" ? "Detective" : 
+                           otherWord === "Jester" ? "Jester" : 
                            "Non-Imposter";
 
           detectiveHint = document.createElement("div");
@@ -1729,6 +2186,11 @@ generateBtn.addEventListener("click", generateCards);
 // Save detective toggle state
 detectiveToggle.addEventListener("change", () => {
   localStorage.setItem("detectiveEnabled", detectiveToggle.checked);
+});
+
+// Save jester toggle state
+jesterToggle.addEventListener("change", () => {
+  localStorage.setItem("jesterEnabled", jesterToggle.checked);
 });
 
 /* ===== INITIALIZATION ===== */

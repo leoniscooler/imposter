@@ -3022,40 +3022,19 @@ if (currentSubject) {
 
 // Initialize the show player names button visibility
 showPlayerNamesBtn.style.display = 'block';
-hidePlayerNamesBtn.textContent = 'Hide Player Names';
 playerNamesSection.style.display = 'none';
 
-// Update the button text based on current state
-function updatePlayerNamesToggleButton() {
-  if (playerNamesSection.style.display === 'block') {
-    hidePlayerNamesBtn.textContent = 'Hide Player Names';
-  } else {
-    hidePlayerNamesBtn.textContent = 'Show Player Names';
-  }
-}
-
-// Update the button text initially
-updatePlayerNamesToggleButton();
-
-// Update event listener for hide/show button
+// Single event listener for the hide button
 hidePlayerNamesBtn.addEventListener('click', () => {
-  if (playerNamesSection.style.display === 'block') {
-    playerNamesSection.style.display = 'none';
-    showPlayerNamesBtn.style.display = 'block';
-  } else {
-    playerNamesSection.style.display = 'block';
-    showPlayerNamesBtn.style.display = 'none';
-    updatePlayerNamesList();
-  }
-  updatePlayerNamesToggleButton();
+  playerNamesSection.style.display = 'none';
+  showPlayerNamesBtn.style.display = 'block';
 });
 
-// Update event listener for the other toggle button
+// Single event listener for the show button
 showPlayerNamesBtn.addEventListener('click', () => {
   playerNamesSection.style.display = 'block';
   showPlayerNamesBtn.style.display = 'none';
   updatePlayerNamesList();
-  updatePlayerNamesToggleButton();
 });
 </script>
 </body>

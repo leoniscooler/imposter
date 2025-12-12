@@ -253,6 +253,10 @@
       border-left-color: #ec4899;
     }
 
+    .role-card.clueless {
+      border-left-color: #06b6d4;
+    }
+
     .role-card h4 {
       margin: 0 0 12px;
       font-size: 18px;
@@ -275,29 +279,13 @@
       color: white;
     }
 
-    .civilian .role-icon {
-      background: #3b82f6;
-    }
-
-    .imposter .role-icon {
-      background: #dc2626;
-    }
-
-    .detective .role-icon {
-      background: #10b981;
-    }
-
-    .jester .role-icon {
-      background: #f59e0b;
-    }
-
-    .assassin .role-icon {
-      background: #8b5cf6;
-    }
-
-    .pregnant .role-icon {
-      background: #ec4899;
-    }
+    .civilian .role-icon { background: #3b82f6; }
+    .imposter .role-icon { background: #dc2626; }
+    .detective .role-icon { background: #10b981; }
+    .jester .role-icon { background: #f59e0b; }
+    .assassin .role-icon { background: #8b5cf6; }
+    .pregnant .role-icon { background: #ec4899; }
+    .clueless .role-icon { background: #06b6d4; }
 
     .role-card p {
       margin: 0 0 12px;
@@ -752,21 +740,11 @@
       cursor: pointer;
     }
 
-    .detective-toggle input[type="checkbox"] {
-      accent-color: #10b981;
-    }
-
-    .jester-toggle input[type="checkbox"] {
-      accent-color: #f59e0b;
-    }
-
-    .assassin-toggle input[type="checkbox"] {
-      accent-color: #8b5cf6;
-    }
-
-    .pregnant-toggle input[type="checkbox"] {
-      accent-color: #ec4899;
-    }
+    .detective-toggle input[type="checkbox"] { accent-color: #10b981; }
+    .jester-toggle input[type="checkbox"] { accent-color: #f59e0b; }
+    .assassin-toggle input[type="checkbox"] { accent-color: #8b5cf6; }
+    .pregnant-toggle input[type="checkbox"] { accent-color: #ec4899; }
+    .clueless-toggle input[type="checkbox"] { accent-color: #06b6d4; }
 
     @media (max-width: 480px) {
       .role-toggle {
@@ -1426,6 +1404,12 @@
       border-left-color: #ec4899;
     }
 
+    .role-list .clueless-role {
+      background: #ecfeff;
+      color: #0891b2;
+      border-left-color: #0891b2;
+    }
+
     .assassin-target {
       font-size: 12px;
       color: #8b5cf6;
@@ -1443,6 +1427,17 @@
       font-weight: 600;
       margin-top: 4px;
       background: rgba(236, 72, 153, 0.1);
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    
+    .clueless-word-display {
+      font-size: 12px;
+      color: #0891b2;
+      font-weight: 600;
+      margin-top: 4px;
+      background: rgba(6, 182, 212, 0.1);
       padding: 4px 8px;
       border-radius: 6px;
       display: inline-block;
@@ -1680,7 +1675,6 @@
     Cards can only be opened once.
   </p>
 
-  <!-- Info Modal -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
       <div class="modal-header">
@@ -1701,7 +1695,7 @@
             <li><strong>Winning:</strong> Civilians win if all imposters are eliminated. Imposters win if they survive. Jester wins if he/she gets voted out. Assassin wins if their target gets voted out. Pregnant gets 2 votes.</li>
           </ol>
         </div>
-		
+        
         <div class="modal-section">
           <h3>Cards</h3>
           <div class="role-grid">
@@ -1760,6 +1754,15 @@
               <div class="goal">Goal: Use your extra vote wisely</div>
             </div>
 
+            <div class="role-card clueless">
+              <h4>
+                <span class="role-icon">?</span>
+                Clueless
+              </h4>
+              <p>You receive a <strong>wrong</strong> word from the same category. You don't know you are clueless; your card looks just like a civilian's.</p>
+              <div class="goal">Goal: Figure out you are clueless!</div>
+            </div>
+
           </div>
         </div>
 
@@ -1777,19 +1780,7 @@
           </ol>
         </div>
 
-        <div class="modal-section">
-          <h3>Tips</h3>
-          <ul>
-            <li><strong>Civilians:</strong> Give specific yet unrevealing words. Imposters often give vague answers.</li>
-            <li><strong>Imposters:</strong> Listen carefully to what others say and build on their descriptions.</li>
-            <li><strong>Detective:</strong> Use your peek information wisely - don't reveal it too early.</li>
-            <li><strong>Jester:</strong> Act suspicious but not obviously fake. You want to be voted out, not ignored.</li>
-            <li><strong>Assassin:</strong> Frame your target without being obvious. Work with imposters if possible.</li>
-            <li><strong>Pregnant:</strong> Use your extra vote strategically. You can sway the outcome!</li>
-          </ul>
-        </div>
-
-		leoniscool.com
+        leoniscool.com
 
       </div>
     </div>
@@ -1806,8 +1797,7 @@
     
     <div id="subjectSelection">
       <div class="subject-options" id="subjectOptions">
-        <!-- Subjects will be added here by JavaScript -->
-      </div>
+        </div>
       
       <div class="custom-subject-container">
         <div class="custom-subject-input">
@@ -1818,7 +1808,6 @@
     </div>
   </div>
 
-  <!-- Player Names Section -->
   <div class="player-names-section" id="playerNamesSection">
     <h2>Customize Player Names</h2>
     
@@ -1830,10 +1819,8 @@
     </div>
     
     <div class="player-names-list" id="playerNamesList">
-      <!-- Player name inputs will be added here by JavaScript -->
-    </div>
+      </div>
     
-    <!-- Add/Remove Player Controls at Bottom -->
     <div class="player-count-controls">
       <div class="player-count-label">Number of Players</div>
       <div class="count-buttons">
@@ -1847,7 +1834,6 @@
   </div>
 
   <div class="controls">
-    <!-- Players slider -->
     <div class="slider-container">
       <div class="slider-label">
         Players
@@ -1862,7 +1848,6 @@
       </div>
     </div>
 
-    <!-- Imposters slider -->
     <div class="slider-container">
       <div class="slider-label">
         Imposters
@@ -1905,6 +1890,13 @@
       </label>
     </div>
 
+    <div class="role-toggle clueless-toggle">
+      <label>
+        <input id="cluelessToggle" type="checkbox">
+        Clueless
+      </label>
+    </div>
+
     <button id="generateBtn" class="btn" disabled>Deal Cards</button>
     
     <button class="toggle-player-names" id="showPlayerNamesBtn">Customize Player Names</button>
@@ -1914,7 +1906,6 @@
   
   <div id="cardsContainer" class="cards"></div>
   
-  <!-- Status section moved to bottom -->
   <div class="status-section">
     <div id="revealTracker" class="reveal-tracker"></div>
     <div id="pregnantAnnouncement" class="pregnant-announcement"></div>
@@ -1947,6 +1938,7 @@ let secretCategory = ""; // Store secret category globally for detective
 let assassinTarget = null; // Store assassin's target
 let playerNames = []; // Store custom player names
 let pregnantPlayer = null; // Store which player is pregnant (index)
+let cluelessWord = ""; // Store the wrong word given to the clueless player
 
 /* ===== ELEMENTS ===== */
 const cardsContainer = document.getElementById("cardsContainer");
@@ -1989,6 +1981,7 @@ const detectiveToggle = document.getElementById("detectiveToggle");
 const jesterToggle = document.getElementById("jesterToggle");
 const assassinToggle = document.getElementById("assassinToggle");
 const pregnantToggle = document.getElementById("pregnantToggle");
+const cluelessToggle = document.getElementById("cluelessToggle");
 
 // Modal elements
 const infoBtn = document.getElementById("infoBtn");
@@ -2483,6 +2476,7 @@ detectiveToggle.checked = JSON.parse(localStorage.getItem("detectiveEnabled")) |
 jesterToggle.checked = JSON.parse(localStorage.getItem("jesterEnabled")) || false;
 assassinToggle.checked = JSON.parse(localStorage.getItem("assassinEnabled")) || false;
 pregnantToggle.checked = JSON.parse(localStorage.getItem("pregnantEnabled")) || false;
+cluelessToggle.checked = JSON.parse(localStorage.getItem("cluelessEnabled")) || false;
 
 // Load player names from localStorage if they exist, otherwise use default
 const savedPlayerNames = JSON.parse(localStorage.getItem("playerNames"));
@@ -2828,6 +2822,9 @@ function selectFirstPlayer() {
     if (pregnantToggle.checked) {
       roleNotes.push("Pregnant");
     }
+    if (cluelessToggle.checked) {
+      roleNotes.push("Clueless");
+    }
     
     if (roleNotes.length > 0) {
       firstPlayerText += `\n(${roleNotes.join(" & ")} in play)`;
@@ -2873,6 +2870,11 @@ function revealAllRoles() {
     } else if (word === "Jester") {
       roleName = "Jester";
       roleClass = "jester-role";
+    } else if (word === "Clueless") {
+      roleName = "Clueless";
+      roleClass = "clueless-role";
+      // Show what word they had
+      specialNote = `<div class="clueless-word-display">Thought the word was: "${cluelessWord}"</div>`;
     } else if (word === "Assassin") {
       roleName = "Assassin";
       roleClass = "assassin-role";
@@ -2940,6 +2942,7 @@ function generateCards() {
   pregnantAnnouncement.textContent = '';
   errorBox.textContent = "";
   pregnantPlayer = null;
+  cluelessWord = "";
 
   const playerCount = parseInt(playerSlider.value, 10);
   const imposterCount = parseInt(imposterSlider.value, 10);
@@ -2965,6 +2968,7 @@ function generateCards() {
   if (detectiveToggle.checked) specialRolesCount++;
   if (jesterToggle.checked) specialRolesCount++;
   if (assassinToggle.checked) specialRolesCount++;
+  if (cluelessToggle.checked) specialRolesCount++;
   // Pregnant doesn't count against civilian slots since it stacks
   const pregnantEnabled = pregnantToggle.checked;
   
@@ -2980,19 +2984,32 @@ function generateCards() {
   // Select random item from all available items
   secretItem = getRandomItemFromArray(customItems);
   
-  // Determine category based on whether it's a default subject
+  // Determine category and available items for that category
   secretCategory = "Common";
+  let categoryItems = [];
+
   if (defaultSubjects[currentSubject]) {
     // Find which category the item belongs to
     for (const [category, items] of Object.entries(defaultSubjects[currentSubject])) {
       if (items.includes(secretItem)) {
         secretCategory = category;
+        categoryItems = items;
         break;
       }
     }
   } else {
     // For custom subjects, just use "Custom" as the category
     secretCategory = "Custom";
+    categoryItems = customItems;
+  }
+
+  // Check Clueless Feasibility: Need at least 2 items in category (Secret + Clueless)
+  if (cluelessToggle.checked && categoryItems.length < 2) {
+      errorBox.textContent = "Clueless role disabled: Not enough words in this category.";
+      // Disable clue toggle internally for this round logic, but keep UI checked? 
+      // Better to just treat it as if toggle was off for logic flow, but user sees warning
+      // Actually, let's just error out for clarity
+      return;
   }
 
   // Initialize words array with all civilians
@@ -3036,6 +3053,22 @@ function generateCards() {
     }
   }
 
+  // Assign Clueless (optional) - replaces a civilian
+  if (cluelessToggle.checked) {
+    let assigned = false;
+    while (!assigned) {
+      const idx = Math.floor(Math.random() * playerCount);
+      if (words[idx] === "Civilian") {
+        words[idx] = "Clueless";
+        assigned = true;
+
+        // Pick a clueless word from the SAME category that is NOT the secret item
+        const potentialCluelessWords = categoryItems.filter(item => item !== secretItem);
+        cluelessWord = getRandomItemFromArray(potentialCluelessWords);
+      }
+    }
+  }
+
   // Assign assassin (optional) - replaces a civilian
   let assassinIndex = null;
   assassinTarget = null;
@@ -3075,7 +3108,7 @@ function generateCards() {
     pregnantPlayer = Math.floor(Math.random() * playerCount);
   }
 
-  // Replace all non-imposter, non-detective, non-jester, non-assassin with the secret item
+  // Replace all non-special roles with the secret item
   for (let i = 0; i < words.length; i++) {
     if (words[i] === "Civilian") {
       words[i] = secretItem;
@@ -3124,7 +3157,7 @@ function generateCards() {
     if (newAssassinIndex !== null && newTargetIndex !== null && newAssassinIndex === newTargetIndex) {
       // Find another non-imposter to swap with
       for (let i = 0; i < words.length; i++) {
-        if (i !== newAssassinIndex && words[i] !== "Imposter" && words[i] !== "Detective" && words[i] !== "Jester" && words[i] !== "Assassin") {
+        if (i !== newAssassinIndex && words[i] !== "Imposter" && words[i] !== "Detective" && words[i] !== "Jester" && words[i] !== "Assassin" && words[i] !== "Clueless") {
           // Swap the assassin's position with this player
           [words[newAssassinIndex], words[i]] = [words[i], words[newAssassinIndex]];
           
@@ -3220,6 +3253,9 @@ function generateCards() {
           assassinText.className = "assassin-role";
           assassinText.textContent = "Assassin";
           wordBox.appendChild(assassinText);
+        } else if (word === "Clueless") {
+          // Clueless player sees the WRONG word, but no special role text
+          wordBox.textContent = cluelessWord;
         } else {
           wordBox.textContent = word; // This is the secret item
         }
@@ -3256,10 +3292,11 @@ function generateCards() {
             const otherPlayer = possiblePlayers[Math.floor(Math.random() * possiblePlayers.length)];
             const otherWord = words[otherPlayer];
             const otherRole = otherWord === "Imposter" ? "Imposter" : 
-                             otherWord === "Detective" ? "Detective" : 
-                             otherWord === "Jester" ? "Jester" : 
-                             otherWord === "Assassin" ? "Assassin" : 
-                             "Non-Imposter";
+                              otherWord === "Detective" ? "Detective" : 
+                              otherWord === "Jester" ? "Jester" : 
+                              otherWord === "Assassin" ? "Assassin" : 
+                              otherWord === "Clueless" ? "Clueless" :
+                              "Non-Imposter";
             const otherPlayerName = playerNames[otherPlayer] || `Player ${otherPlayer + 1}`;
 
             specialHint.className = "detective-hint";
@@ -3429,6 +3466,10 @@ assassinToggle.addEventListener("change", () => {
 
 pregnantToggle.addEventListener("change", () => {
   localStorage.setItem("pregnantEnabled", pregnantToggle.checked);
+});
+
+cluelessToggle.addEventListener("change", () => {
+  localStorage.setItem("cluelessEnabled", cluelessToggle.checked);
 });
 
 /* ===== INITIALIZATION ===== */

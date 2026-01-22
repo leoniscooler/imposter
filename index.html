@@ -197,7 +197,7 @@
     .card-header { display: flex; justify-content: space-between; align-items: center; font-size: clamp(14px, 3vw, 16px); font-weight: 700; }
     .status-label { font-size: 11px; text-transform: uppercase; color: #777; font-weight: 600; letter-spacing: 0.5px; transition: color 0.15s; }
     
-    .word-box { padding: 16px 10px; border-radius: 12px; border: 1px dashed #bbb; text-align: center; font-size: clamp(16px, 4vw, 20px); font-weight: 800; opacity: 0; transform: scale(0.9); transition: opacity 0.25s, transform 0.25s; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; word-break: break-word; overflow-wrap: break-word; width: 100%; }
+    .word-box { padding: 16px 10px; border-radius: 12px; border: 1px dashed #bbb; text-align: center; font-size: clamp(16px, 4vw, 20px); font-weight: 800; opacity: 0; transform: scale(0.9); transition: opacity 0.25s, transform 0.25s; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; word-break: break-word; overflow-wrap: break-word; width: 100%; user-select: none; }
     @media (max-width: 400px) { .word-box { min-height: 54px; padding: 12px 8px; } }
     .word-hidden { color: #777; }
     .word-revealed { color: #111; opacity: 1; transform: scale(1); }
@@ -257,21 +257,6 @@
     .king-badge { font-size: 12px; color: #d97706; font-weight: 600; margin-top: 4px; background: rgba(234, 179, 8, 0.1); padding: 4px 8px; border-radius: 6px; display: inline-block; }
     .clueless-word-display { font-size: 12px; color: #0891b2; font-weight: 600; margin-top: 4px; background: rgba(6, 182, 212, 0.1); padding: 4px 8px; border-radius: 6px; display: inline-block; }
     .footer-note { margin-top: 24px; text-align: center; font-size: 13px; color: #666; padding: 0 12px; line-height: 1.5; max-width: 500px; width: 100%; }
-  /* AI Button Style */
-.subject-option.ai-generate {
-  border: 2px dashed #f43f5e;
-  color: #f43f5e;
-  background: #fff1f2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-.subject-option.ai-generate:hover {
-  background: #ffe4e6;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
-}
   </style>
 </head>
 
@@ -326,34 +311,6 @@
       </div>
     </div>
   </div>
-  
-  <div class="modal-overlay" id="aiModalOverlay">
-  <div class="modal">
-    <div class="modal-header">
-      <h2>✨ AI Subject Generator</h2>
-      <button class="close-btn" id="closeAiModalBtn">&times;</button>
-    </div>
-    <div class="modal-content">
-      <p style="text-align:center; color:#666; margin-bottom: 20px;">
-        Enter a topic and AI will create a category and word list for you instantly.
-      </p>
-      
-      <div class="form-group">
-        <label class="form-label" for="aiTopicInput">Topic / Theme</label>
-        <input type="text" id="aiTopicInput" class="form-input" placeholder="e.g. Harry Potter, 90s Rappers, obscure cheeses...">
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn-secondary" id="cancelAiBtn">Cancel</button>
-        <button class="btn-primary" id="generateAiBtn" style="background: linear-gradient(135deg, #f43f5e, #e11d48);">
-          <span>⚡</span> Generate
-        </button>
-      </div>
-      
-      <div id="aiStatus" style="text-align:center; margin-top:10px; color:#666; font-size:14px; min-height:20px;"></div>
-    </div>
-  </div>
-</div>
 
   <div class="modal-overlay" id="createSubjectOverlay">
     <div class="modal">
@@ -536,14 +493,6 @@
 </div>
 
 <script>
-// AI Modal Elements
-const aiModalOverlay = document.getElementById("aiModalOverlay");
-const closeAiModalBtn = document.getElementById("closeAiModalBtn");
-const cancelAiBtn = document.getElementById("cancelAiBtn");
-const generateAiBtn = document.getElementById("generateAiBtn");
-const aiTopicInput = document.getElementById("aiTopicInput");
-const aiStatus = document.getElementById("aiStatus");
-
 /* ====== GAME STATE ===== */
 let currentSubject = "";
 let actualCustomSubject = ""; // Stores the actual custom word
@@ -633,110 +582,6 @@ const submitGithubBtn = document.getElementById("submitGithubBtn"); // New GitHu
 const newSubjectNameInput = document.getElementById("newSubjectName");
 const categoriesContainer = document.getElementById("categoriesContainer");
 const addCategoryBtn = document.getElementById("addCategoryBtn");
-
-/* ===== AI GENERATOR FUNCTIONS ===== */
-function openAiModal() {
-  aiTopicInput.value = "";
-  aiStatus.textContent = "";
-  generateAiBtn.disabled = false;
-  generateAiBtn.innerHTML = "<span>⚡</span> Generate";
-  aiModalOverlay.classList.add('active');
-  aiTopicInput.focus();
-}
-
-function closeAiModal() {
-  aiModalOverlay.classList.remove('active');
-}
-
-async function fetchAiResponse(messages, onComplete) {
-  try {
-    const response = await fetch('https://text.pollinations.ai/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        model: 'openai', 
-        messages: messages, 
-        stream: false, 
-        temperature: 0.1, // Low creativity for consistent JSON
-        max_tokens: 350
-      }),
-    });
-    const data = await response.json();
-    const text = data.choices[0].message.content;
-    if(onComplete) onComplete(text);
-  } catch (e) {
-    console.error(e);
-    aiStatus.textContent = "Network error. Please try again.";
-    generateAiBtn.disabled = false;
-    generateAiBtn.innerHTML = "<span>⚡</span> Generate";
-  }
-}
-
-function safeJsonParse(str) {
-  try {
-    let clean = str.replace(/```json/g, "").replace(/```/g, "").trim();
-    return JSON.parse(clean);
-  } catch (e) {
-    // Attempt to fix unclosed array
-    try {
-      let clean = str.replace(/```json/g, "").replace(/```/g, "").trim();
-      if(!clean.endsWith(']')) clean += ']';
-      return JSON.parse(clean); 
-    } catch(e2) { return null; }
-  }
-}
-
-function generateAiSubject() {
-  const topic = aiTopicInput.value.trim();
-  if (!topic) {
-    aiStatus.textContent = "Please enter a topic.";
-    return;
-  }
-
-  generateAiBtn.disabled = true;
-  generateAiBtn.innerHTML = "<span>⏳</span> Thinking...";
-  aiStatus.textContent = "Consulting the oracle...";
-
-  // Optimized prompt for flat array
-  const prompt = `Topic: "${topic}".
-    Return a single JSON Array containing 16 strings.
-    Index 0 is a Creative Title for this category.
-    Index 1-15 are related words for the game.
-    Example: ["Space Things", "Sun", "Moon", "Stars"...]
-    No markdown.`;
-
-  const messages = [
-    { role: "system", content: "Output RAW JSON Array only." },
-    { role: "user", content: prompt }
-  ];
-
-  fetchAiResponse(messages, (rawText) => {
-    const data = safeJsonParse(rawText);
-    
-    if (!Array.isArray(data) || data.length < 5) {
-      aiStatus.textContent = "AI got confused. Try a simpler topic.";
-      generateAiBtn.disabled = false;
-      generateAiBtn.innerHTML = "<span>⚡</span> Generate";
-      return;
-    }
-
-    const subjectName = data[0]; // Title
-    const words = data.slice(1); // Items
-
-    // 1. Save to Custom Subjects Structure
-    // Structure: { "Subject Name": { "Category Name": [words] } }
-    const newSubjectData = {};
-    newSubjectData[subjectName] = words; // Using SubjectName as CategoryName for simplicity
-    
-    savedCustomSubjects[subjectName] = newSubjectData;
-    localStorage.setItem("savedCustomSubjects", JSON.stringify(savedCustomSubjects));
-
-    // 2. Refresh UI and Select
-    closeAiModal();
-    initializeSubjectOptions(); // Re-render list
-    selectSubject(subjectName); // Auto-select the new one
-  });
-}
 
 /* ===== DEFAULT SUBJECTS ===== */
 const defaultSubjects = {
@@ -1201,26 +1046,20 @@ imposterSlider.addEventListener('change', updateSliderDisplays);
 function initializeSubjectOptions() {
   subjectOptions.innerHTML = "";
   
-  // 1. Add "Create New" Button (Manual)
+  // 1. Add "Create New" Button
   const createBtn = document.createElement("div");
   createBtn.className = "subject-option add-new";
-  createBtn.innerHTML = "<span>+</span> Create Manual";
+  createBtn.innerHTML = "<span>+</span> Create New";
   createBtn.addEventListener("click", openCreateSubjectModal);
   subjectOptions.appendChild(createBtn);
-
-  // 2. Add "AI Generate" Button (New!)
-  const aiBtn = document.createElement("div");
-  aiBtn.className = "subject-option ai-generate";
-  aiBtn.innerHTML = "<span>✨</span> AI Generate";
-  aiBtn.addEventListener("click", openAiModal);
-  subjectOptions.appendChild(aiBtn);
   
-  // 3. Combine and Sort all subjects (Default + Saved)
+  // 2. Combine and Sort all subjects (Default + Saved)
   const allKeys = [
     ...Object.keys(defaultSubjects),
     ...Object.keys(savedCustomSubjects)
   ].sort();
   
+  // Remove duplicates (if any name collision, though we check on save)
   const uniqueKeys = [...new Set(allKeys)];
   
   uniqueKeys.forEach(subject => {
@@ -1235,8 +1074,10 @@ function initializeSubjectOptions() {
       option.classList.add("selected");
     }
     
+    // Click to select
     option.addEventListener("click", () => selectSubject(subject));
     
+    // Add delete button if custom
     if (isCustom) {
       const deleteBtn = document.createElement("div");
       deleteBtn.className = "delete-subject-btn";
@@ -1997,6 +1838,26 @@ function generateCards() {
         // Render Role Text
         if (word === "Imposter") {
           wordBox.textContent = "Imposter";
+
+          // --- LONG PRESS LOGIC TO REVEAL SECRET ---
+          let pressTimer;
+          const startPress = () => {
+             pressTimer = setTimeout(() => {
+                wordBox.textContent = secretItem; // Show the secret word
+                wordBox.style.color = "#dc2626"; // Make it red to indicate cheat/secret
+             }, 3000);
+          };
+          const cancelPress = () => {
+             clearTimeout(pressTimer);
+          };
+          
+          // Add events to the word box
+          wordBox.addEventListener("mousedown", startPress);
+          wordBox.addEventListener("touchstart", startPress, {passive: true});
+          wordBox.addEventListener("mouseup", cancelPress);
+          wordBox.addEventListener("mouseleave", cancelPress);
+          wordBox.addEventListener("touchend", cancelPress);
+          
         } else if (word === "Detective") {
           wordBox.textContent = secretItem;
           const roleText = document.createElement("div");
@@ -2103,6 +1964,9 @@ function generateCards() {
           if (kingHint && kingHint.parentNode) kingHint.parentNode.removeChild(kingHint);
           
           while (wordBox.firstChild) wordBox.removeChild(wordBox.firstChild);
+          
+          // FIX: Clear any inline styles (specifically color from the imposter cheat)
+          wordBox.style.color = ""; 
           
           wordBox.textContent = "Locked";
           wordBox.className = "word-box word-locked";
@@ -2249,17 +2113,6 @@ showPlayerNamesBtn.addEventListener('click', () => {
   playerNamesSection.style.display = 'block';
   showPlayerNamesBtn.style.display = 'none';
   updatePlayerNamesList();
-});
-
-// AI Modal Listeners
-closeAiModalBtn.addEventListener('click', closeAiModal);
-cancelAiBtn.addEventListener('click', closeAiModal);
-generateAiBtn.addEventListener('click', generateAiSubject);
-aiTopicInput.addEventListener('keypress', (e) => {
-  if (e.key === "Enter") generateAiSubject();
-});
-aiModalOverlay.addEventListener('click', (e) => {
-  if (e.target === aiModalOverlay) closeAiModal();
 });
 </script>
 </body>
